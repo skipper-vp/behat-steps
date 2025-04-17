@@ -182,7 +182,7 @@ trait FileDownloadTrait {
    */
   public function fileDownloadAssertFileNameContains(string $name): void {
     if (!$this->fileDownloadDownloadedFileInfo || empty($this->fileDownloadDownloadedFileInfo['file_name'])) {
-      throw new \RuntimeException('Downloaded file name content has no data.');
+      throw new \Exception('Downloaded file name content has no data.');
     }
 
     if (!str_contains((string) $this->fileDownloadDownloadedFileInfo['file_name'], $name)) {

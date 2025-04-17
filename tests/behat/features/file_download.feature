@@ -2,7 +2,7 @@ Feature: Check that FileDownloadTrait works
 
   Background:
     Given I am logged in as a user with the "administrator" role
-    Given managed file:
+    Given the following managed files:
       | path                 |
       | example_document.pdf |
       | example_image.png    |
@@ -99,3 +99,17 @@ Feature: Check that FileDownloadTrait works
     Then the downloaded file should be a zip archive not containing the files partially named:
       | example_text |
       | not_existing |
+
+  @api @trait:FileDownloadTrait
+  Scenario: Assert that empty download info throws error for file name contains
+    Given some behat configuration
+    And scenario steps:
+      """
+      Given I am logged in as a user with the "administrator" role
+      Then the downloaded file name should contain "anything"
+      """
+    When I run "behat --no-colors"
+    Then it should fail with an error:
+      """
+      Downloaded file name content has no data. (Exception)
+      """
